@@ -1,10 +1,10 @@
-// ============================================
-// app/page.tsx
-// Page d'accueil - Importe et affiche le composant StoreFront
-// ============================================
+// Le "@/ " dit à Next.js de regarder dans le dossier "src"
+import StoreFront from '@/FRONTEND/StoreFront';
 
-import StoreFront from '../FRONTEND/StoreFront';
-
-export default function HomePage() {
-  return <StoreFront />;
+export default function Home() {
+  return (
+    <main>
+      <StoreFront />
+    </main>
+  );
 }
