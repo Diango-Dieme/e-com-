@@ -3,675 +3,923 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <!-- META SEO HYPER-LOCALE (améliorée) -->
-    <meta name="description" content="Ajamat Sport : e-commerce premium d'articles de sport technique à Cap Skirring. Surf, Paddle, Cyclisme, Padel. Matériel haut de gamme avec stock local, livraison rapide et paiements Wave/Orange Money.">
-    <meta name="keywords" content="matériel sport Cap Skirring, surf Sénégal, wax surf, leash, padel, cyclisme, paddle, boutique sport Casamance, équipement surf, location surf Cap Skirring">
-    <meta name="geo.region" content="SN-SE">
+    <meta name="description" content="Ajamat Sport : équipement de sport technique à Cap Skirring. Surf, Paddle, Padel, Natation. Stock local, livraison rapide, paiements Wave/Orange Money.">
+    <meta name="keywords" content="matériel sport Cap Skirring, surf Sénégal, wax surf, leash, padel, paddle, boutique sport Casamance">
+    <meta name="geo.region" content="SN-ZI">
     <meta name="geo.placename" content="Cap Skirring">
-    <title>Ajamat Sport – Équipement technique premium, stocké à Cap Skirring</title>
+    <title>Ajamat Sport – Équipement technique à Cap Skirring</title>
 
-    <!-- Tailwind CSS + Google Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
-    <!-- Lucide icônes (CDN) -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* ----- Micro-interactions, glassmorphism, animations ----- */
+        :root {
+            --bg:          #f5f1ea;
+            --bg-card:     #ffffff;
+            --ocean:       #0a3d55;
+            --ocean-light: #1a6b8a;
+            --sand:        #c8a96e;
+            --coral:       #d95f35;
+            --text:        #1a1a1a;
+            --text-muted:  #6b6b6b;
+            --border:      rgba(0,0,0,0.08);
+            --radius:      16px;
+            --shadow:      0 2px 20px rgba(0,0,0,0.06);
+            --shadow-h:    0 8px 40px rgba(10,61,85,0.14);
+        }
+
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+        h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
 
-        /* Glassmorphism */
-        .glass {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.2);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.1);
+        /* ── NAVBAR ─────────────────────────────── */
+        .navbar {
+            background: rgba(245,241,234,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
         }
 
-        /* Carte produit : hover + fade-in initial */
+        /* ── HERO ────────────────────────────────── */
+        .hero-bg {
+            background: linear-gradient(130deg, #091e2d 0%, #0a3d55 45%, #1a6b8a 75%, #0d4a62 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 55% at 15% 55%, rgba(200,169,110,.14) 0%, transparent 65%),
+                radial-gradient(ellipse 55% 70% at 85% 25%, rgba(217,95,53,.10) 0%, transparent 60%);
+        }
+        .hero-grain {
+            position: absolute; inset: 0; opacity: .035; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        .wave-path { animation: waveMove 9s ease-in-out infinite alternate; }
+        @keyframes waveMove { from { transform: translateX(-2%); } to { transform: translateX(2%); } }
+
+        /* ── BADGES ──────────────────────────────── */
+        .badge-local {
+            background: var(--ocean); color: white;
+            font-size: .65rem; font-weight: 700; letter-spacing: .04em;
+            padding: .2rem .55rem; border-radius: 100px;
+            display: inline-flex; align-items: center; gap: .2rem;
+        }
+        .badge-urgent {
+            background: #fef2f2; color: #b91c1c;
+            font-size: .65rem; font-weight: 700;
+            padding: .2rem .55rem; border-radius: 100px;
+            animation: urgPulse 2s infinite;
+        }
+        @keyframes urgPulse { 0%,100%{opacity:1} 50%{opacity:.65} }
+
+        /* ── PRODUCT CARDS ───────────────────────── */
         .product-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.4s ease;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: transform .25s ease, box-shadow .25s ease;
             opacity: 0;
-            animation: fadeInUp 0.5s forwards;
+            animation: fadeUp .5s ease forwards;
         }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .product-card:nth-child(1){animation-delay:0ms}
+        .product-card:nth-child(2){animation-delay:60ms}
+        .product-card:nth-child(3){animation-delay:120ms}
+        .product-card:nth-child(4){animation-delay:180ms}
+        .product-card:nth-child(5){animation-delay:240ms}
+        .product-card:nth-child(6){animation-delay:300ms}
+        .product-card:nth-child(7){animation-delay:360ms}
+        .product-card:nth-child(8){animation-delay:420ms}
+        @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+        .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-h); }
+
+        /* ── PRODUCT IMAGE ───────────────────────── */
+        .prod-img {
+            background: linear-gradient(135deg,#e6f2f8,#cce4f0);
+            border-radius: 12px; overflow: hidden; position: relative;
         }
-        .product-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.02);
+        .prod-img img { width:100%; height:200px; object-fit:cover; transition: transform .4s ease; }
+        .product-card:hover .prod-img img { transform: scale(1.04); }
+
+        /* ── FILTER PILLS ────────────────────────── */
+        .filter-pill {
+            font-family: 'Syne', sans-serif; font-size: .85rem; font-weight: 600;
+            padding: .45rem 1.1rem; border-radius: 100px; cursor: pointer;
+            border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-muted);
+            transition: all .2s ease;
+        }
+        .filter-pill:hover { border-color: var(--ocean); color: var(--ocean); }
+        .filter-pill.active { background: var(--ocean); color: white; border-color: var(--ocean); }
+
+        /* ── BUTTONS ─────────────────────────────── */
+        .btn-p {
+            font-family: 'Syne', sans-serif; font-weight: 600;
+            background: var(--ocean); color: white; border-radius: 100px;
+            transition: all .2s ease;
+        }
+        .btn-p:hover { background: var(--ocean-light); transform: translateY(-1px); }
+        .btn-s {
+            font-family: 'Syne', sans-serif; font-weight: 600;
+            background: transparent; color: var(--ocean);
+            border: 1.5px solid var(--ocean); border-radius: 100px;
+            transition: all .2s ease;
+        }
+        .btn-s:hover { background: var(--ocean); color: white; }
+
+        /* ── PACKS ───────────────────────────────── */
+        .pack-card {
+            background: var(--ocean); border-radius: var(--radius);
+            position: relative; overflow: hidden;
+        }
+        .pack-card::before {
+            content: ''; position: absolute;
+            top: -50%; right: -20%; width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(200,169,110,.14) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .pack-card-2 { background: var(--ocean-light); }
+
+        /* ── TESTIMONIALS ────────────────────────── */
+        .testi-card {
+            background: var(--bg-card); border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: transform .2s ease;
+        }
+        .testi-card:hover { transform: translateY(-3px); }
+
+        /* ── CART DRAWER ─────────────────────────── */
+        .cart-drawer { background: var(--ocean); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+
+        /* ── MOBILE MENU ─────────────────────────── */
+        .mobile-menu { background: var(--ocean); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+
+        /* ── QTY BUTTON ──────────────────────────── */
+        .qty-btn {
+            width: 26px; height: 26px; border-radius: 50%;
+            background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.2);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: background .15s; font-size: .9rem; line-height:1;
+        }
+        .qty-btn:hover { background: rgba(255,255,255,.25); }
+
+        /* ── SECTION LABEL ───────────────────────── */
+        .s-label {
+            font-family: 'Syne', sans-serif; font-size: .7rem; font-weight: 700;
+            letter-spacing: .15em; text-transform: uppercase; color: var(--sand);
         }
 
-        /* Badge stock local */
-        .stock-badge {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 9999px;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
+        /* ── FLOATING WAB ────────────────────────── */
+        .fab {
+            position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 40;
+            background: #25D366; color: white; border-radius: 100px;
+            padding: .7rem 1.2rem; display: flex; align-items: center; gap: .5rem;
+            font-family: 'Syne', sans-serif; font-weight: 600; font-size: .85rem;
+            box-shadow: 0 4px 20px rgba(37,211,102,.38);
+            transition: all .2s ease; animation: fabPulse 3.5s ease-in-out infinite;
+        }
+        .fab:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(37,211,102,.55); }
+        @keyframes fabPulse {
+            0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.38)}
+            50%{box-shadow:0 4px 28px rgba(37,211,102,.65)}
         }
 
-        /* Couleurs bleu océan */
-        .bg-ocean { background-color: #0b4f6c; }
-        .text-ocean { color: #0b4f6c; }
-        .btn-ocean {
-            background-color: #0b4f6c;
-            color: white;
-            transition: background-color 0.2s;
-        }
-        .btn-ocean:hover { background-color: #0a3b4f; }
+        /* ── SCROLL REVEAL ───────────────────────── */
+        .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+        .reveal.vis { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: .1s; }
+        .reveal-d2 { transition-delay: .2s; }
+        .reveal-d3 { transition-delay: .3s; }
 
-        /* Alerte urgence */
-        .urgence-pulse { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
+        /* ── HERO TEXT REVEAL ────────────────────── */
+        .hero-reveal { opacity: 0; transform: translateY(24px); animation: heroIn .8s ease forwards; }
+        .hero-reveal:nth-child(1){animation-delay:.1s}
+        .hero-reveal:nth-child(2){animation-delay:.25s}
+        .hero-reveal:nth-child(3){animation-delay:.4s}
+        .hero-reveal:nth-child(4){animation-delay:.55s}
+        .hero-reveal:nth-child(5){animation-delay:.7s}
+        @keyframes heroIn { to{opacity:1;transform:translateY(0)} }
 
-        /* Menu hamburger pour mobile */
-        .mobile-nav-enter {
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-        }
-        .mobile-nav-enter-active { transform: translateX(0); }
-
-        /* Modale produit (overlay) */
-        .modal-overlay {
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-        }
-
-        /* Personnalisation du drawer panier */
-        #cart-offcanvas { transition: transform 0.3s ease-in-out; }
-
-        /* Réglages pour le menu mobile */
-        #mobile-menu.active { transform: translateX(0); }
+        /* ── LIVE DOT ────────────────────────────── */
+        .live-dot { width:8px; height:8px; border-radius:50%; background:#4ade80; animation:liveDot 2s infinite; }
+        @keyframes liveDot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.75)} }
     </style>
 </head>
-<body class="antialiased text-gray-800">
+<body>
 
-    <!-- ========== NAVBAR GLASS (avec menu hamburger mobile) ========== -->
-    <header class="fixed top-0 left-0 w-full z-50 glass border-b border-white/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16 md:h-20">
-                <!-- Logo + nom -->
-                <div class="flex items-center space-x-2">
-                    <i data-lucide="waves" class="text-ocean w-8 h-8"></i>
-                    <span class="font-bold text-xl md:text-2xl text-slate-800">Ajamat Sport</span>
+<!-- ═══ NAVBAR ═══════════════════════════════════════════════════════ -->
+<header class="navbar fixed top-0 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-[70px]">
+
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--ocean)">
+                    <i data-lucide="waves" class="w-4 h-4 text-white"></i>
                 </div>
-
-                <!-- Navigation desktop (catégories) -->
-                <nav class="hidden md:flex space-x-6 text-slate-700 font-medium">
-                    <a href="#produits" class="hover:text-ocean transition" data-filter-desktop="surf">Surf</a>
-                    <a href="#produits" class="hover:text-ocean transition" data-filter-desktop="paddle">Paddle</a>
-                    <a href="#produits" class="hover:text-ocean transition" data-filter-desktop="cyclisme">Cyclisme</a>
-                    <a href="#produits" class="hover:text-ocean transition" data-filter-desktop="padel">Padel</a>
-                    <a href="#produits" class="hover:text-ocean transition" data-filter-desktop="natation">Natation</a>
-                </nav>
-
-                <!-- Icônes : hamburger (mobile) + panier -->
-                <div class="flex items-center space-x-2">
-                    <!-- Menu hamburger (visible mobile) -->
-                    <button id="menu-toggle" class="p-2 rounded-full hover:bg-white/20 transition md:hidden">
-                        <i data-lucide="menu" class="w-6 h-6 text-slate-800"></i>
-                    </button>
-                    <!-- Panier -->
-                    <button id="cart-toggle" class="relative p-2 rounded-full hover:bg-white/20 transition">
-                        <i data-lucide="shopping-cart" class="w-6 h-6 text-slate-800"></i>
-                        <span id="cart-count" class="absolute -top-1 -right-1 bg-ocean text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
-                    </button>
-                </div>
+                <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--ocean)">Ajamat Sport</span>
             </div>
-        </div>
 
-        <!-- Menu mobile (drawer gauche) -->
-        <div id="mobile-menu" class="fixed top-0 left-0 h-full w-64 glass-dark text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-[60] p-6 md:hidden">
-            <div class="flex justify-between items-center mb-6">
-                <span class="font-bold text-xl">Catégories</span>
-                <button id="close-mobile-menu" class="p-1 rounded-full hover:bg-white/20">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-            <nav class="flex flex-col space-y-4">
-                <button data-filter="surf" class="filter-btn-mobile text-left px-4 py-2 rounded-lg hover:bg-white/10">Surf</button>
-                <button data-filter="paddle" class="filter-btn-mobile text-left px-4 py-2 rounded-lg hover:bg-white/10">Paddle</button>
-                <button data-filter="cyclisme" class="filter-btn-mobile text-left px-4 py-2 rounded-lg hover:bg-white/10">Cyclisme</button>
-                <button data-filter="padel" class="filter-btn-mobile text-left px-4 py-2 rounded-lg hover:bg-white/10">Padel</button>
-                <button data-filter="natation" class="filter-btn-mobile text-left px-4 py-2 rounded-lg hover:bg-white/10">Natation</button>
-                <button data-filter="all" class="filter-btn-mobile text-left px-4 py-2 rounded-lg hover:bg-white/10 mt-4 border-t border-white/20 pt-4">Tous les produits</button>
+            <nav class="hidden md:flex items-center gap-1">
+                <a href="#produits" data-filter-desktop="surf"     class="nav-lnk px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-[var(--ocean)] hover:bg-white/60 transition">Surf</a>
+                <a href="#produits" data-filter-desktop="paddle"   class="nav-lnk px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-[var(--ocean)] hover:bg-white/60 transition">Paddle</a>
+                <a href="#produits" data-filter-desktop="padel"    class="nav-lnk px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-[var(--ocean)] hover:bg-white/60 transition">Padel</a>
+                <a href="#produits" data-filter-desktop="natation" class="nav-lnk px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-[var(--ocean)] hover:bg-white/60 transition">Natation</a>
             </nav>
-        </div>
-    </header>
 
-    <!-- ========== HERO SIMPLE ========== -->
-    <section class="pt-24 pb-12 md:pt-32 md:pb-20 bg-gradient-to-b from-white to-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">L'océan, la terre, la vitesse.</h1>
-            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">Matériel technique haut de gamme, stocké à Cap Skirring. Prêt à être utilisé sous le soleil de Casamance.</p>
-        </div>
-    </section>
-
-    <!-- ========== FILTRES DYNAMIQUES (DESKTOP) ========== -->
-    <section class="pb-8 hidden md:block">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap justify-center gap-3">
-                <button data-filter="all" class="filter-btn px-6 py-2 rounded-full bg-ocean text-white font-medium shadow-md">Tous</button>
-                <button data-filter="surf" class="filter-btn px-6 py-2 rounded-full bg-white border border-gray-300 text-slate-700 font-medium hover:bg-gray-100">Surf</button>
-                <button data-filter="paddle" class="filter-btn px-6 py-2 rounded-full bg-white border border-gray-300 text-slate-700 font-medium hover:bg-gray-100">Paddle</button>
-                <button data-filter="cyclisme" class="filter-btn px-6 py-2 rounded-full bg-white border border-gray-300 text-slate-700 font-medium hover:bg-gray-100">Cyclisme</button>
-                <button data-filter="padel" class="filter-btn px-6 py-2 rounded-full bg-white border border-gray-300 text-slate-700 font-medium hover:bg-gray-100">Padel</button>
-                <button data-filter="natation" class="filter-btn px-6 py-2 rounded-full bg-white border border-gray-300 text-slate-700 font-medium hover:bg-gray-100">Natation</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== GRILLE PRODUITS ========== -->
-    <section id="produits" class="py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- injecté par JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== SECTION PACKS AVANTAGE ========== -->
-    <section class="py-12 bg-white/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">⚡ Packs avantage</h2>
-            <p class="text-slate-600 mb-8">Équipez-vous malin avec nos bundles à prix doux</p>
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Pack Surf Débutant -->
-                <div class="glass-dark rounded-2xl p-6 border border-white/30 text-white">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-xl font-bold">Pack Surf Débutant</h3>
-                            <p class="text-white/80">Leash Koetsu + Wax Premium</p>
-                            <div class="mt-4 space-y-1">
-                                <span class="line-through text-white/60">13 198 FCFA</span>
-                                <div class="text-2xl font-bold">11 878 FCFA</div>
-                                <span class="bg-green-400 text-slate-900 text-sm px-2 py-0.5 rounded-full">Économisez 10%</span>
-                            </div>
-                            <button data-add-pack='[{"name":"Leash Koetsu","price":8909,"category":"surf"},{"name":"Wax Surf Premium","price":4289,"category":"surf"}]' class="mt-4 bg-white text-ocean font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition">Ajouter le pack</button>
-                        </div>
-                        <i data-lucide="gift" class="w-12 h-12 text-white/50"></i>
-                    </div>
-                </div>
-                <!-- Pack Paddle Aventure (exemple) -->
-                <div class="glass-dark rounded-2xl p-6 border border-white/30 text-white">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-xl font-bold">Pack Paddle Aventure</h3>
-                            <p class="text-white/80">Paddle gonflable + pagaie carbone</p>
-                            <div class="mt-4 space-y-1">
-                                <span class="line-through text-white/60">145 000 FCFA</span>
-                                <div class="text-2xl font-bold">130 500 FCFA</div>
-                                <span class="bg-green-400 text-slate-900 text-sm px-2 py-0.5 rounded-full">Économisez 10%</span>
-                            </div>
-                            <button data-add-pack='[{"name":"Paddle Board","price":125000,"category":"paddle"},{"name":"Pagaie Carbone","price":20000,"category":"paddle"}]' class="mt-4 bg-white text-ocean font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition">Ajouter le pack</button>
-                        </div>
-                        <i data-lucide="ship" class="w-12 h-12 text-white/50"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== RECOMMANDATIONS (CROSS-SELLING) ========== -->
-    <section class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">🔁 Complétez votre équipement</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                <!-- mini cartes recommandation -->
-                <div class="bg-white rounded-xl p-3 shadow-sm flex items-center space-x-3">
-                    <i data-lucide="watch" class="w-8 h-8 text-ocean"></i>
-                    <div>
-                        <div class="font-medium">Montre étanche</div>
-                        <div class="text-sm text-gray-500">15 900 FCFA</div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl p-3 shadow-sm flex items-center space-x-3">
-                    <i data-lucide="droplets" class="w-8 h-8 text-ocean"></i>
-                    <div>
-                        <div class="font-medium">Crème solaire</div>
-                        <div class="text-sm text-gray-500">4 500 FCFA</div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl p-3 shadow-sm flex items-center space-x-3">
-                    <i data-lucide="bike" class="w-8 h-8 text-ocean"></i>
-                    <div>
-                        <div class="font-medium">GPS vélo</div>
-                        <div class="text-sm text-gray-500">32 000 FCFA</div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl p-3 shadow-sm flex items-center space-x-3">
-                    <i data-lucide="swords" class="w-8 h-8 text-ocean"></i>
-                    <div>
-                        <div class="font-medium">Protège-pala</div>
-                        <div class="text-sm text-gray-500">6 200 FCFA</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== SECTION PREUVE SOCIALE (AVIS CLIENTS) ========== -->
-    <section class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">⭐ Ce que nos clients disent</h2>
-            <div class="grid md:grid-cols-3 gap-6 mt-8">
-                <div class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                    <div class="flex text-yellow-400 mb-2">★★★★★</div>
-                    <p class="text-slate-700">"Le surf ici est incroyable, et le leash Koetsu est super solide. Livraison rapide à Cap Skirring."</p>
-                    <p class="mt-4 font-semibold">— Amadou, surfeur local</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                    <div class="flex text-yellow-400 mb-2">★★★★★</div>
-                    <p class="text-slate-700">"J'ai pris le pack paddle pour mes sorties en Casamance. Matériel top et conseils par WhatsApp."</p>
-                    <p class="mt-4 font-semibold">— Marie, guide touristique</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                    <div class="flex text-yellow-400 mb-2">★★★★☆</div>
-                    <p class="text-slate-700">"Balles de padel de qualité, stock disponible à Ziguinchor. Je recommande."</p>
-                    <p class="mt-4 font-semibold">— Ibrahima, joueur de padel</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== SECTION NOTRE HISTOIRE + LIVRAISON ========== -->
-    <section class="py-12 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12">
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">🌊 Notre histoire</h2>
-                <p class="text-slate-700 leading-relaxed">Ajamat Sport est né à Cap Skirring d'une passion pour l'océan et le sport. Nous sélectionnons personnellement chaque article pour offrir le meilleur matériel technique aux sportifs de Casamance. Notre équipe de surfeurs et cyclistes locaux teste tout avant de vous le proposer. Basés au cœur de Cap Skirring, nous sommes fiers de servir notre communauté.</p>
-            </div>
-            <div>
-                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-4">🚚 Livraison & retours</h2>
-                <ul class="text-slate-700 space-y-2 list-disc list-inside">
-                    <li>Livraison à Cap Skirring : <strong>gratuite</strong> (jour même)</li>
-                    <li>Ziguinchor : 24h - 1 500 FCFA</li>
-                    <li>Autres régions : 2-4 jours (tarif selon zone)</li>
-                    <li>Retours possibles sous 14 jours, échange en boutique.</li>
-                </ul>
-                <p class="mt-4 text-sm text-slate-500">Paiement à la livraison (Wave/Orange Money acceptés).</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== FOOTER (PAIEMENT LOCAL) ========== -->
-    <footer class="bg-slate-800 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center space-x-2">
-                    <i data-lucide="shield-check" class="w-5 h-5 text-green-400"></i>
-                    <span>Paiement sécurisé</span>
-                </div>
-                <div class="flex items-center space-x-6">
-                    <span class="font-medium">Paiements locaux acceptés :</span>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Orange_logo.svg/2560px-Orange_logo.svg.png" alt="Orange Money" class="h-6 w-auto brightness-0 invert">
-                    <span class="text-xl font-bold text-green-300">Wave</span>
-                </div>
-                <div class="text-sm text-gray-300">
-                    © 2026 Ajamat Sport — Stock à Cap Skirring, Sénégal
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ========== PANIER OFFCANVAS ========== -->
-    <div id="cart-offcanvas" class="fixed top-0 right-0 h-full w-full max-w-sm glass-dark text-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50">
-        <div class="flex flex-col h-full p-6">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold">Votre panier</h2>
-                <button id="close-cart" class="p-1 rounded-full hover:bg-white/20">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+            <div class="flex items-center gap-1">
+                <button id="menu-toggle" class="p-2 rounded-xl hover:bg-white/60 transition md:hidden">
+                    <i data-lucide="menu" class="w-5 h-5" style="color:var(--ocean)"></i>
+                </button>
+                <button id="cart-toggle" class="relative p-2 rounded-xl hover:bg-white/60 transition">
+                    <i data-lucide="shopping-bag" class="w-5 h-5" style="color:var(--ocean)"></i>
+                    <span id="cart-count" class="hidden absolute -top-1 -right-1 text-white text-xs font-bold rounded-full w-5 h-5 items-center justify-center" style="background:var(--coral)">0</span>
                 </button>
             </div>
-            <div id="cart-items" class="flex-1 overflow-y-auto space-y-4">
-                <!-- Les articles dynamiques -->
+        </div>
+    </div>
+</header>
+
+<!-- Mobile drawer -->
+<div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-72 text-white transform -translate-x-full z-[60] flex flex-col p-6 md:hidden">
+    <div class="flex justify-between items-center mb-8">
+        <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem">Catégories</span>
+        <button id="close-mobile-menu" class="p-1.5 rounded-xl hover:bg-white/10 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+    </div>
+    <nav class="flex flex-col gap-1">
+        <button data-filter="all"      class="filter-btn-mobile text-left px-4 py-3 rounded-xl hover:bg-white/10 transition font-medium">Tous les produits</button>
+        <button data-filter="surf"     class="filter-btn-mobile text-left px-4 py-3 rounded-xl hover:bg-white/10 transition font-medium">🏄 Surf</button>
+        <button data-filter="paddle"   class="filter-btn-mobile text-left px-4 py-3 rounded-xl hover:bg-white/10 transition font-medium">🏄‍♂️ Paddle</button>
+        <button data-filter="padel"    class="filter-btn-mobile text-left px-4 py-3 rounded-xl hover:bg-white/10 transition font-medium">🎾 Padel</button>
+        <button data-filter="natation" class="filter-btn-mobile text-left px-4 py-3 rounded-xl hover:bg-white/10 transition font-medium">🏊 Natation</button>
+    </nav>
+    <div class="mt-auto">
+        <div class="text-sm text-white/50">Stocké localement</div>
+        <div style="font-family:'Syne',sans-serif;font-size:.75rem;color:var(--sand)" class="mt-0.5">Cap Skirring, Casamance</div>
+    </div>
+</div>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════════════ -->
+<section class="hero-bg min-h-[90vh] flex flex-col justify-center relative pt-16">
+    <div class="hero-grain"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+        <div class="max-w-2xl">
+
+            <div class="hero-reveal mb-5">
+                <span class="inline-flex items-center gap-2 text-sm px-3.5 py-1.5 rounded-full font-medium"
+                    style="background:rgba(200,169,110,.18);color:#d4aa6e;border:1px solid rgba(200,169,110,.3)">
+                    <span class="live-dot"></span>
+                    Stock disponible à Cap Skirring
+                </span>
             </div>
-            <div class="border-t border-white/20 pt-4 mt-4">
-                <div class="flex justify-between font-semibold text-lg">
-                    <span>Total</span>
-                    <span id="cart-total">0 FCFA</span>
+
+            <h1 class="hero-reveal text-5xl sm:text-6xl md:text-7xl font-extrabold text-white leading-[1.04] mb-6">
+                L'océan.<br>
+                <span style="color:var(--sand)">La force.</span><br>
+                La vitesse.
+            </h1>
+
+            <p class="hero-reveal text-base md:text-lg text-white/65 max-w-lg leading-relaxed mb-9" style="font-weight:300">
+                Matériel technique sélectionné pour les sports de glisse et de plage.
+                Stocké localement à Cap Skirring, livré le jour même.
+            </p>
+
+            <div class="hero-reveal flex flex-col sm:flex-row gap-3">
+                <a href="#produits" class="btn-p inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm">
+                    <i data-lucide="package" class="w-4 h-4"></i> Voir les produits
+                </a>
+                <a href="https://wa.me/221761534994" target="_blank"
+                    class="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm rounded-full font-semibold transition"
+                    style="background:rgba(255,255,255,.1);color:white;border:1.5px solid rgba(255,255,255,.22);font-family:'Syne',sans-serif">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> Nous contacter
+                </a>
+            </div>
+
+            <div class="hero-reveal mt-14 flex flex-wrap gap-8 border-t border-white/10 pt-8">
+                <div>
+                    <div class="text-2xl font-bold text-white" style="font-family:'Syne',sans-serif">J+0</div>
+                    <div class="text-xs text-white/45 mt-0.5">Livraison Cap Skirring</div>
                 </div>
-                <!-- Boutons paiement local + WhatsApp -->
-                <div class="mt-4 grid grid-cols-2 gap-2">
-                    <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 rounded-full flex items-center justify-center gap-2"><i data-lucide="smartphone" class="w-4 h-4"></i>Orange Money</button>
-                    <button class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-full flex items-center justify-center gap-2"><i data-lucide="zap" class="w-4 h-4"></i>Wave</button>
+                <div class="w-px bg-white/10 self-stretch hidden sm:block"></div>
+                <div>
+                    <div class="text-2xl font-bold text-white" style="font-family:'Syne',sans-serif">5+</div>
+                    <div class="text-xs text-white/45 mt-0.5">Sports couverts</div>
                 </div>
-                <!-- Bouton commander via WhatsApp (numéro à modifier) -->
-                <button id="checkout-whatsapp" class="mt-3 w-full bg-[#25D366] hover:bg-[#20b859] text-white font-medium py-2 rounded-full flex items-center justify-center gap-2">
-                    <i data-lucide="message-circle" class="w-4 h-4"></i> Commander via WhatsApp
-                </button>
-                <p class="text-xs text-white/60 text-center mt-2">Récapitulatif envoyé automatiquement</p>
+                <div class="w-px bg-white/10 self-stretch hidden sm:block"></div>
+                <div>
+                    <div class="text-2xl font-bold" style="font-family:'Syne',sans-serif;color:var(--sand)">Wave</div>
+                    <div class="text-xs text-white/45 mt-0.5">& Orange Money acceptés</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ========== MODALE PRODUIT (DÉTAILS) ========== -->
-    <div id="product-modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 modal-overlay">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
-            <button id="close-modal" class="absolute top-4 right-4 p-1 rounded-full hover:bg-gray-200">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <div id="modal-content" class="space-y-4">
-                <!-- injecté par JS -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden" style="line-height:0">
+        <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;display:block">
+            <path class="wave-path" d="M0,36 C240,72 480,0 720,36 C960,72 1200,0 1440,36 L1440,72 L0,72 Z" fill="#f5f1ea"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ═══ FILTER TABS ═══════════════════════════════════════════════════ -->
+<div class="sticky z-30 py-5 border-b border-black/5" style="top:70px;background:var(--bg)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-2">
+            <button data-filter="all"      class="filter-pill active">Tous</button>
+            <button data-filter="surf"     class="filter-pill">🏄 Surf</button>
+            <button data-filter="paddle"   class="filter-pill">🏄‍♂️ Paddle</button>
+            <button data-filter="padel"    class="filter-pill">🎾 Padel</button>
+            <button data-filter="natation" class="filter-pill">🏊 Natation</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ PRODUCTS GRID ══════════════════════════════════════════════════ -->
+<section id="produits" class="pb-16 pt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+        <div id="no-products" class="hidden text-center py-20 text-gray-400">
+            <i data-lucide="package-open" class="w-12 h-12 mx-auto mb-3 opacity-30"></i>
+            <p class="text-sm">Aucun produit dans cette catégorie pour le moment.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ PACKS ══════════════════════════════════════════════════════════ -->
+<section class="py-16" style="background:linear-gradient(to bottom,var(--bg),#ece7dc)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal mb-10">
+            <div class="s-label mb-2">Offres groupées</div>
+            <h2 class="text-3xl font-bold" style="color:var(--ocean)">Packs avantage</h2>
+            <p class="text-gray-500 mt-1 text-sm">Équipez-vous mieux, pour moins cher.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-5">
+            <div class="pack-card reveal p-7 text-white">
+                <div class="flex justify-between items-start gap-4">
+                    <div>
+                        <div class="text-xs font-bold tracking-widest uppercase opacity-50 mb-2">Pack surf</div>
+                        <h3 class="text-xl font-bold mb-1">Pack Débutant</h3>
+                        <p class="text-white/60 text-sm mb-5">Leash Koetsu + Wax Surf Premium</p>
+                        <div class="flex items-end gap-3 mb-5">
+                            <span class="text-2xl font-bold" style="font-family:'Syne',sans-serif">11 878 FCFA</span>
+                            <span class="line-through text-white/35 text-sm pb-0.5">13 198 FCFA</span>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:rgba(200,169,110,.22);color:var(--sand)">−10%</span>
+                        </div>
+                        <button data-add-pack='[{"name":"Leash Koetsu 6&apos;","price":8909,"category":"surf"},{"name":"Wax Surf Premium","price":4289,"category":"surf"}]'
+                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-white hover:bg-gray-100 transition"
+                            style="color:var(--ocean);font-family:'Syne',sans-serif">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i> Ajouter le pack
+                        </button>
+                    </div>
+                    <div class="text-6xl opacity-20 flex-shrink-0 select-none">🏄</div>
+                </div>
+            </div>
+
+            <div class="pack-card pack-card-2 reveal reveal-d1 p-7 text-white">
+                <div class="flex justify-between items-start gap-4">
+                    <div>
+                        <div class="text-xs font-bold tracking-widest uppercase opacity-50 mb-2">Pack padel</div>
+                        <h3 class="text-xl font-bold mb-1">Pack Padel Complet</h3>
+                        <p class="text-white/60 text-sm mb-5">Balles padel x2 + Overgrip raquette</p>
+                        <div class="flex items-end gap-3 mb-5">
+                            <span class="text-2xl font-bold" style="font-family:'Syne',sans-serif">14 490 FCFA</span>
+                            <span class="line-through text-white/35 text-sm pb-0.5">16 116 FCFA</span>
+                            <span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:rgba(200,169,110,.22);color:var(--sand)">−10%</span>
+                        </div>
+                        <button data-add-pack='[{"name":"Balles de Padel (x3)","price":5958,"category":"padel"},{"name":"Balles de Padel (x3)","price":5958,"category":"padel"},{"name":"Overgrip Raquette Padel","price":2400,"category":"padel"}]'
+                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold bg-white hover:bg-gray-100 transition"
+                            style="color:var(--ocean);font-family:'Syne',sans-serif">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i> Ajouter le pack
+                        </button>
+                    </div>
+                    <div class="text-6xl opacity-20 flex-shrink-0 select-none">🎾</div>
+                </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- ========== SCRIPT JSON-LD (STRUCTURÉ LOCAL) ========== -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "SportingGoodsStore",
-        "name": "Ajamat Sport",
-        "image": "https://via.placeholder.com/1200x630.png?text=Ajamat+Sport",
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Cap Skirring",
-            "addressRegion": "Sédhiou",
-            "addressCountry": "SN"
+<!-- ═══ CROSS-SELL ════════════════════════════════════════════════════ -->
+<section class="py-14" style="background:var(--bg)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal mb-8">
+            <div class="s-label mb-2">Complétez votre kit</div>
+            <h2 class="text-2xl font-bold" style="color:var(--ocean)">Accessoires essentiels</h2>
+        </div>
+        <div id="cross-sell-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+    </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ══════════════════════════════════════════════════ -->
+<section class="py-16" style="background:#ece7dc">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal mb-10">
+            <div class="s-label mb-2">Témoignages</div>
+            <h2 class="text-2xl font-bold" style="color:var(--ocean)">Ils surfent avec nous</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-5">
+            <div class="testi-card reveal p-6">
+                <div class="text-yellow-400 text-sm mb-3 tracking-wider">★★★★★</div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-4">"Le leash Koetsu est d'une solidité impressionnante. Livraison le jour même à Cap Skirring — c'est ça la différence."</p>
+                <div class="font-semibold text-sm" style="color:var(--ocean)">Amadou D.</div>
+                <div class="text-xs text-gray-400">Surfeur local, Cap Skirring</div>
+            </div>
+            <div class="testi-card reveal reveal-d1 p-6">
+                <div class="text-yellow-400 text-sm mb-3 tracking-wider">★★★★★</div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-4">"J'accompagne des groupes de touristes et j'ai besoin de matériel disponible immédiatement. Ajamat Sport est ma référence."</p>
+                <div class="font-semibold text-sm" style="color:var(--ocean)">Marie T.</div>
+                <div class="text-xs text-gray-400">Guide touristique, Casamance</div>
+            </div>
+            <div class="testi-card reveal reveal-d2 p-6">
+                <div class="text-yellow-400 text-sm mb-3 tracking-wider">★★★★☆</div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-4">"Les balles de padel sont de bonne qualité et le stock est toujours là. Commander via WhatsApp est vraiment pratique."</p>
+                <div class="font-semibold text-sm" style="color:var(--ocean)">Ibrahima K.</div>
+                <div class="text-xs text-gray-400">Joueur de padel, Ziguinchor</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ HISTOIRE + LIVRAISON ══════════════════════════════════════════ -->
+<section class="py-16" style="background:var(--bg)">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-14 items-start">
+        <div class="reveal">
+            <div class="s-label mb-3">Notre histoire</div>
+            <h2 class="text-2xl font-bold mb-4" style="color:var(--ocean)">Nés à Cap Skirring</h2>
+            <p class="text-gray-600 text-sm leading-relaxed">
+                Ajamat Sport est né d'une passion pour l'océan et les sports de plage en Casamance. Nous sélectionnons chaque article pour les sportifs locaux et les visiteurs qui veulent pratiquer dans les meilleures conditions, sans attendre une livraison depuis Dakar ou l'étranger.
+            </p>
+            <p class="text-gray-500 text-sm leading-relaxed mt-3">
+                Le nom <em>Ajamat</em> — en diola — incarne la force et le mouvement. Comme les vagues de l'Atlantique qui façonnent notre plage.
+            </p>
+        </div>
+        <div class="reveal reveal-d1">
+            <div class="s-label mb-3">Livraison & paiement</div>
+            <h2 class="text-2xl font-bold mb-5" style="color:var(--ocean)">Simple et local</h2>
+            <div class="space-y-3">
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white border" style="border-color:var(--border)">
+                    <i data-lucide="map-pin" class="w-4 h-4 mt-0.5 flex-shrink-0" style="color:var(--ocean)"></i>
+                    <div>
+                        <div class="font-semibold text-sm">Cap Skirring centre</div>
+                        <div class="text-xs text-gray-500">Gratuit — livraison le jour même</div>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white border" style="border-color:var(--border)">
+                    <i data-lucide="truck" class="w-4 h-4 mt-0.5 flex-shrink-0" style="color:var(--ocean)"></i>
+                    <div>
+                        <div class="font-semibold text-sm">Ziguinchor & environs</div>
+                        <div class="text-xs text-gray-500">24h — 1 500 FCFA</div>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white border" style="border-color:var(--border)">
+                    <i data-lucide="credit-card" class="w-4 h-4 mt-0.5 flex-shrink-0" style="color:var(--ocean)"></i>
+                    <div>
+                        <div class="font-semibold text-sm">Paiement à la livraison</div>
+                        <div class="text-xs text-gray-500">Wave, Orange Money, espèces</div>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white border" style="border-color:var(--border)">
+                    <i data-lucide="refresh-ccw" class="w-4 h-4 mt-0.5 flex-shrink-0" style="color:var(--ocean)"></i>
+                    <div>
+                        <div class="font-semibold text-sm">Retours sous 14 jours</div>
+                        <div class="text-xs text-gray-500">Échange en boutique</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════════ -->
+<footer class="py-10" style="background:var(--ocean);color:white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                    <i data-lucide="waves" class="w-4 h-4 text-white"></i>
+                </div>
+                <div>
+                    <div style="font-family:'Syne',sans-serif;font-weight:700">Ajamat Sport</div>
+                    <div class="text-xs text-white/45">Cap Skirring, Ziguinchor, Sénégal</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 flex-wrap justify-center">
+                <span class="text-xs text-white/50">Paiements :</span>
+                <span class="text-xs font-semibold px-3 py-1 rounded-full" style="background:rgba(255,165,0,.16);color:#ffb347">Orange Money</span>
+                <span class="text-xs font-semibold px-3 py-1 rounded-full" style="background:rgba(37,211,102,.16);color:#4ade80">Wave</span>
+                <span class="text-xs font-semibold px-3 py-1 rounded-full bg-white/10">Espèces</span>
+            </div>
+            <div class="text-xs text-white/35 text-center md:text-right">© 2026 Ajamat Sport<br>Tous droits réservés</div>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══ CART DRAWER ════════════════════════════════════════════════════ -->
+<div id="cart-offcanvas" class="cart-drawer fixed top-0 right-0 h-full w-full max-w-sm text-white shadow-2xl transform translate-x-full z-50 flex flex-col">
+    <div class="flex justify-between items-center p-6 border-b border-white/10 flex-shrink-0">
+        <h2 style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700">Votre panier</h2>
+        <button id="close-cart" class="p-1.5 rounded-xl hover:bg-white/10 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+    <div class="p-6 border-t border-white/10 flex-shrink-0">
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-sm text-white/60">Total</span>
+            <span id="cart-total" style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700">0 FCFA</span>
+        </div>
+        <button id="checkout-whatsapp"
+            class="w-full py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 text-sm transition hover:opacity-90"
+            style="background:#25D366;font-family:'Syne',sans-serif">
+            <i data-lucide="message-circle" class="w-4 h-4"></i> Commander via WhatsApp
+        </button>
+        <p class="text-xs text-white/35 text-center mt-2">Récapitulatif envoyé automatiquement</p>
+    </div>
+</div>
+
+<!-- ═══ PRODUCT MODAL ════════════════════════════════════════════════ -->
+<div id="product-modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4"
+    style="background:rgba(0,0,0,.62);backdrop-filter:blur(6px)">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
+        <button id="close-modal" class="absolute top-4 right-4 p-2 rounded-xl hover:bg-gray-100 transition z-10">
+            <i data-lucide="x" class="w-5 h-5 text-gray-500"></i>
+        </button>
+        <div id="modal-content" class="p-6 space-y-4"></div>
+    </div>
+</div>
+
+<!-- ═══ FLOATING WHATSAPP ════════════════════════════════════════════ -->
+<a href="https://wa.me/221761534994" target="_blank" class="fab">
+    <i data-lucide="message-circle" class="w-4 h-4"></i>
+    <span class="hidden sm:inline">Contacter</span>
+</a>
+
+<!-- ═══ JSON-LD ══════════════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SportingGoodsStore",
+    "name": "Ajamat Sport",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Cap Skirring",
+        "addressRegion": "Ziguinchor",
+        "addressCountry": "SN"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "12.3578",
+        "longitude": "-16.7356"
+    },
+    "url": "https://ajamatsport.sn",
+    "telephone": "+221761534994",
+    "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "09:00",
+        "closes": "19:00"
+    }],
+    "priceRange": "CFA"
+}
+</script>
+
+<!-- ═══ JAVASCRIPT ════════════════════════════════════════════════════ -->
+<script>
+(function () {
+    const WHATSAPP = '221761534994';
+
+    /* ── CATALOGUE ─────────────────────────────────────────────────── */
+    const products = [
+        {
+            id: 1, category: 'surf',
+            name: "Leash Koetsu 6'",
+            price: 8909,
+            image: "https://via.placeholder.com/400x280/0a3d55/c8a96e?text=Leash+Surf",
+            stockUrgent: true,
+            description: "Leash ultra-résistant en uréthane, longueur 6 pieds. Idéal pour les vagues de Cap Skirring.",
+            details: "Double swivel anti-torsion · Attache velcro renforcée · Idéal eau chaude"
         },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "12.3578",
-            "longitude": "-16.7356"
+        {
+            id: 2, category: 'surf',
+            name: "Wax Surf Premium",
+            price: 4289,
+            image: "https://via.placeholder.com/400x280/0a3d55/c8a96e?text=Wax+Surf",
+            stockUrgent: true,
+            description: "Wax tropicale pour eaux chaudes (24°C+). Excellente adhérence, parfum vanille.",
+            details: "Formule tropical · Base ou top coat · 3 barrettes incluses"
         },
-        "url": "https://ajamatsport.sn",
-        "telephone": "+221 78 123 45 67",
-        "openingHoursSpecification": [
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-                "opens": "09:00",
-                "closes": "19:00"
-            }
-        ],
-        "priceRange": "CFA"
+        {
+            id: 3, category: 'surf',
+            name: "Traction Pad Surf",
+            price: 6500,
+            image: "https://via.placeholder.com/400x280/0a3d55/c8a96e?text=Traction+Pad",
+            stockUrgent: false,
+            description: "Traction pad 3 pièces pour shortboard et fish. Grip maximal sous les pieds.",
+            details: "Mousse EVA haute densité · Kick tail 35mm · Adhésif 3M"
+        },
+        {
+            id: 4, category: 'natation',
+            name: "Lunettes SCVCN",
+            price: 3668,
+            image: "https://via.placeholder.com/400x280/1a6b8a/ffffff?text=Lunettes+Swim",
+            stockUrgent: false,
+            description: "Lunettes de natation anti-buée, verres teintés pour la mer. Confortables et ajustables.",
+            details: "Joint silicone · Nez interchangeable · Protection UV"
+        },
+        {
+            id: 5, category: 'natation',
+            name: "Masque Snorkeling 180°",
+            price: 9800,
+            image: "https://via.placeholder.com/400x280/1a6b8a/ffffff?text=Masque+Snorkel",
+            stockUrgent: false,
+            description: "Masque intégral vision panoramique 180°. Parfait pour les fonds de Casamance.",
+            details: "Anti-buée · Valve anti-remontée d'eau · Taille adulte universelle"
+        },
+        {
+            id: 6, category: 'padel',
+            name: "Balles de Padel (x3)",
+            price: 5958,
+            image: "https://via.placeholder.com/400x280/0a3d55/ffffff?text=Balles+Padel",
+            stockUrgent: false,
+            description: "Balles de padel pression optimale pour terrains extérieurs. Homologuées FIP.",
+            details: "Lot de 3 balles · Résistance chaleur · Homologuées FIP"
+        },
+        {
+            id: 7, category: 'padel',
+            name: "Overgrip Raquette Padel",
+            price: 2400,
+            image: "https://via.placeholder.com/400x280/0a3d55/ffffff?text=Overgrip",
+            stockUrgent: false,
+            description: "Overgrip absorbant pour raquette de padel. Lot de 3. Améliore la prise en main.",
+            details: "Lot de 3 · Absorbant humidité · Compatible toutes raquettes"
+        },
+        {
+            id: 8, category: 'paddle',
+            name: "Pagaie SUP Alu",
+            price: 18500,
+            image: "https://via.placeholder.com/400x280/0b4f6c/c8a96e?text=Pagaie+SUP",
+            stockUrgent: false,
+            description: "Pagaie de stand-up paddle en aluminium, réglable 165–215cm. Légère et robuste.",
+            details: "Alu 6061 · Réglable 165–215cm · Poids 680g · Pale HDPE"
+        }
+    ];
+
+    const crossItems = [
+        { id: 101, name: "Crème solaire SPF50",  price: 4500, icon: "sun",       category: "accessoire" },
+        { id: 102, name: "Sac étanche 10L",       price: 7800, icon: "briefcase", category: "accessoire" },
+        { id: 103, name: "Serviette microfibre",  price: 5200, icon: "wind",      category: "accessoire" },
+        { id: 104, name: "Casquette anti-UV",      price: 3900, icon: "shield",    category: "accessoire" }
+    ];
+
+    /* ── PANIER ────────────────────────────────────────────────────── */
+    let cart = [];
+    const loadCart  = () => { try { cart = JSON.parse(localStorage.getItem('ajamatCart') || '[]'); } catch { cart = []; } };
+    const saveCart  = () => localStorage.setItem('ajamatCart', JSON.stringify(cart));
+    loadCart();
+
+    /* ── DOM REFS ───────────────────────────────────────────────────── */
+    const grid       = document.getElementById('products-grid');
+    const noProd     = document.getElementById('no-products');
+    const offcanvas  = document.getElementById('cart-offcanvas');
+    const cartItems  = document.getElementById('cart-items');
+    const cartTotal  = document.getElementById('cart-total');
+    const cartCount  = document.getElementById('cart-count');
+    const modal      = document.getElementById('product-modal');
+    const modalCont  = document.getElementById('modal-content');
+
+    /* ── RENDER PRODUCTS ───────────────────────────────────────────── */
+    function renderProducts(filter = 'all') {
+        const list = filter === 'all' ? products : products.filter(p => p.category === filter);
+        if (!list.length) { grid.innerHTML = ''; noProd.classList.remove('hidden'); return; }
+        noProd.classList.add('hidden');
+
+        grid.innerHTML = list.map(p => `
+            <div class="product-card flex flex-col overflow-hidden">
+                <div class="prod-img cursor-pointer product-trigger" data-id="${p.id}">
+                    <img src="${p.image}" alt="${p.name}" loading="lazy">
+                    ${p.stockUrgent ? `<div class="absolute top-3 left-3 badge-urgent">🔥 Dernières unités</div>` : ''}
+                </div>
+                <div class="p-4 flex flex-col flex-1">
+                    <div class="flex items-start justify-between gap-2 mb-1.5">
+                        <h3 class="font-semibold text-[14px] leading-snug cursor-pointer product-trigger" data-id="${p.id}"
+                            style="color:var(--text)">${p.name}</h3>
+                        <span class="badge-local flex-shrink-0">
+                            <i data-lucide="map-pin" class="w-2.5 h-2.5"></i> Local
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed mb-3 flex-1">${p.description.substring(0,68)}…</p>
+                    <div class="font-bold text-lg" style="color:var(--ocean);font-family:'Syne',sans-serif">
+                        ${p.price.toLocaleString('fr-FR')} <span class="text-sm font-medium">FCFA</span>
+                    </div>
+                    <button data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-category="${p.category}"
+                        class="add-btn mt-3 w-full py-2.5 rounded-full text-sm font-semibold flex items-center justify-center gap-1.5 transition btn-p">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Ajouter
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        lucide.createIcons();
+
+        document.querySelectorAll('.product-trigger').forEach(el =>
+            el.addEventListener('click', () => {
+                const p = products.find(x => x.id === +el.dataset.id);
+                if (p) openModal(p);
+            })
+        );
+        document.querySelectorAll('.add-btn').forEach(btn =>
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                addToCart({ id: +btn.dataset.id, name: btn.dataset.name, price: +btn.dataset.price, category: btn.dataset.category });
+                const orig = btn.innerHTML;
+                btn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Ajouté !';
+                btn.style.background = '#22c55e';
+                lucide.createIcons();
+                setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; lucide.createIcons(); }, 1500);
+            })
+        );
     }
-    </script>
 
-    <!-- ========== JAVASCRIPT NATIF (TOUTE LA LOGIQUE) ========== -->
-    <script>
-        (function() {
-            // ---------- CONFIGURATION ----------
-            const WHATSAPP_NUMBER = '221761534994'; //  À REMPLACER PAR LE VRAI NUMÉRO
+    /* ── CROSS-SELL ────────────────────────────────────────────────── */
+    function renderCrossSell() {
+        const csg = document.getElementById('cross-sell-grid');
+        csg.innerHTML = crossItems.map(item => `
+            <div class="bg-white rounded-xl p-4 border flex flex-col gap-2 reveal" style="border-color:var(--border)">
+                <i data-lucide="${item.icon}" class="w-6 h-6" style="color:var(--ocean)"></i>
+                <div class="font-medium text-sm">${item.name}</div>
+                <div class="text-xs font-bold" style="color:var(--sand)">${item.price.toLocaleString('fr-FR')} FCFA</div>
+                <button class="cs-btn mt-auto text-xs py-1.5 px-3 rounded-full transition btn-s"
+                    data-id="${item.id}" data-name="${item.name}" data-price="${item.price}" data-category="${item.category}">
+                    + Ajouter
+                </button>
+            </div>
+        `).join('');
+        lucide.createIcons();
 
-            // ---------- DONNÉES PRODUITS (avec vraies descriptions) ----------
-            const products = [
-                { id: 1, name: "Leash Koetsu", price: 8909, category: "surf", image: "https://via.placeholder.com/400x300/0b4f6c/ffffff?text=Leash+Koetsu", stockUrgent: true, description: "Leash ultra-résistant pour surf, fabriqué en uréthane. Longueur 6 pieds. Idéal pour les vagues de Cap Skirring.", details: "Double swivel, attache velcro renforcée." },
-                { id: 2, name: "Lunettes SCVCN", price: 3668, category: "natation", image: "https://via.placeholder.com/400x300/0b4f6c/ffffff?text=Lunettes+SCVCN", stockUrgent: false, description: "Lunettes de natation anti-buée, verres teintés pour la mer. Confortables et ajustables.", details: "Joint silicone, nez interchangeable." },
-                { id: 3, name: "Wax Surf Premium", price: 4289, category: "surf", image: "https://via.placeholder.com/400x300/0b4f6c/ffffff?text=Wax+Premium", stockUrgent: true, description: "Wax tropical pour eaux chaudes (24°C+). Excellente adhérence.", details: "Parfum vanille, s'utilise en base ou top coat." },
-                { id: 4, name: "Balles de Padel", price: 5958, category: "padel", image: "https://via.placeholder.com/400x300/0b4f6c/ffffff?text=Balles+Padel", stockUrgent: false, description: "Balles officielles de padel, pression optimale pour terrains extérieurs.", details: "Boîte de 3 balles, homologuées FIP." },
-                { id: 5, name: "Maillot Cyclisme Pro", price: 12500, category: "cyclisme", image: "https://via.placeholder.com/400x300/0b4f6c/ffffff?text=Maillot+Cyclisme", stockUrgent: true, description: "Maillot aérodynamique manches courtes, tissu respirant.", details: "Poches arrière, zip intégral." },
-                { id: 6, name: "Lunettes de Natation", price: 4200, category: "natation", image: "https://via.placeholder.com/400x300/0b4f6c/ffffff?text=Lunettes+Nat", stockUrgent: false, description: "Lunettes de natation pour eau libre, large champ de vision.", details: "Traitement anti-UV, protection buée." }
-            ];
+        document.querySelectorAll('.cs-btn').forEach(btn =>
+            btn.addEventListener('click', () => {
+                addToCart({ id: +btn.dataset.id, name: btn.dataset.name, price: +btn.dataset.price, category: btn.dataset.category });
+                btn.textContent = '✓ Ajouté';
+                btn.style.cssText = 'background:var(--ocean);color:white;border-color:var(--ocean)';
+                setTimeout(() => { btn.textContent = '+ Ajouter'; btn.style.cssText = ''; }, 1500);
+            })
+        );
+        // re-observe for scroll reveal
+        document.querySelectorAll('#cross-sell-grid .reveal').forEach(el => observer.observe(el));
+    }
 
-            // ---------- ÉTAT DU PANIER (avec localStorage) ----------
-            let cart = [];
+    /* ── MODAL ─────────────────────────────────────────────────────── */
+    function openModal(p) {
+        modalCont.innerHTML = `
+            <img src="${p.image}" alt="${p.name}" class="w-full h-48 object-cover rounded-xl">
+            <div>
+                <span class="badge-local inline-flex mb-2"><i data-lucide="map-pin" class="w-2.5 h-2.5"></i> Stock Cap Skirring</span>
+                <h3 class="text-xl font-bold mt-2 mb-1" style="color:var(--ocean);font-family:'Syne',sans-serif">${p.name}</h3>
+                <div class="text-lg font-bold mb-3" style="color:var(--coral);font-family:'Syne',sans-serif">${p.price.toLocaleString('fr-FR')} FCFA</div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-2">${p.description}</p>
+                <p class="text-xs text-gray-400 leading-relaxed mb-4">${p.details}</p>
+                <button data-id="${p.id}" data-name="${p.name}" data-price="${p.price}" data-category="${p.category}"
+                    class="modal-add w-full py-3 rounded-full text-sm font-semibold flex items-center justify-center gap-2 btn-p">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> Ajouter au panier
+                </button>
+            </div>`;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        lucide.createIcons();
+        modalCont.querySelector('.modal-add').addEventListener('click', btn => {
+            const b = btn.currentTarget;
+            addToCart({ id: +b.dataset.id, name: b.dataset.name, price: +b.dataset.price, category: b.dataset.category });
+            modal.classList.add('hidden');
+        });
+    }
 
-            // Charger panier depuis localStorage
-            function loadCart() {
-                const saved = localStorage.getItem('ajamatCart');
-                if (saved) {
-                    try { cart = JSON.parse(saved); } catch(e) { cart = []; }
-                } else { cart = []; }
-            }
-            function saveCart() {
-                localStorage.setItem('ajamatCart', JSON.stringify(cart));
-            }
+    /* ── CART LOGIC ────────────────────────────────────────────────── */
+    function addToCart(product) {
+        const ex = cart.find(i => i.id === product.id);
+        ex ? ex.quantity++ : cart.push({ ...product, quantity: 1 });
+        saveCart(); updateCartUI();
+        offcanvas.classList.remove('translate-x-full');
+    }
 
-            loadCart(); // initialisation
+    function addPackToCart(items) {
+        items.forEach(prod => {
+            const ex = cart.find(i => i.name === prod.name);
+            ex ? ex.quantity++ : cart.push({ ...prod, id: Date.now() + Math.random(), quantity: 1 });
+        });
+        saveCart(); updateCartUI();
+        offcanvas.classList.remove('translate-x-full');
+    }
 
-            // ---------- ÉLÉMENTS DOM ----------
-            const productsGrid = document.getElementById('products-grid');
-            const cartToggle = document.getElementById('cart-toggle');
-            const closeCart = document.getElementById('close-cart');
-            const offcanvas = document.getElementById('cart-offcanvas');
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotalSpan = document.getElementById('cart-total');
-            const cartCountSpan = document.getElementById('cart-count');
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuToggle = document.getElementById('menu-toggle');
-            const closeMobile = document.getElementById('close-mobile-menu');
-            const filterMobileBtns = document.querySelectorAll('.filter-btn-mobile');
-            const modal = document.getElementById('product-modal');
-            const modalContent = document.getElementById('modal-content');
-            const closeModal = document.getElementById('close-modal');
-            const whatsappBtn = document.getElementById('checkout-whatsapp');
+    function updateQty(id, delta) {
+        const item = cart.find(i => i.id === id);
+        if (!item) return;
+        item.quantity += delta;
+        if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+        saveCart(); updateCartUI();
+    }
 
-            // ---------- FONCTIONS ----------
-            function renderProducts(filter = 'all') {
-                let html = '';
-                products.forEach(prod => {
-                    if (filter === 'all' || prod.category === filter) {
-                        const urgentBadge = prod.stockUrgent ? '<span class="urgence-pulse text-xs bg-red-500 text-white px-2 py-0.5 rounded-full ml-2">🔥 Plus que 2 en stock</span>' : '';
-                        html += `
-                            <div class="product-card bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col" data-id="${prod.id}">
-                                <img src="${prod.image}" alt="${prod.name}" class="w-full h-48 object-cover rounded-xl mb-3 cursor-pointer product-image" data-id="${prod.id}">
-                                <div class="flex items-center justify-between mb-1">
-                                    <h3 class="font-semibold text-lg cursor-pointer product-name" data-id="${prod.id}">${prod.name}</h3>
-                                    <span class="stock-badge"><i data-lucide="map-pin" class="w-3 h-3"></i> Cap Skirring</span>
-                                </div>
-                                <div class="flex items-center justify-between mt-2">
-                                    <span class="text-xl font-bold text-ocean">${prod.price.toLocaleString()} FCFA</span>
-                                    ${urgentBadge}
-                                </div>
-                                <button data-id="${prod.id}" data-name="${prod.name}" data-price="${prod.price}" data-category="${prod.category}" class="add-to-cart-btn mt-4 w-full bg-ocean hover:bg-[#0a3b4f] text-white font-medium py-2 rounded-full transition flex items-center justify-center gap-2">
-                                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> Ajouter
-                                </button>
-                            </div>
-                        `;
-                    }
-                });
-                productsGrid.innerHTML = html;
-                lucide.createIcons();
+    function updateCartUI() {
+        const count = cart.reduce((a, i) => a + i.quantity, 0);
+        const total = cart.reduce((a, i) => a + i.price * i.quantity, 0);
+        cartCount.textContent = count;
+        cartCount.classList.toggle('hidden', count === 0);
+        cartCount.classList.toggle('flex',   count > 0);
+        cartTotal.textContent = total.toLocaleString('fr-FR') + ' FCFA';
 
-                // Écouteurs pour ouverture modale (image ou nom)
-                document.querySelectorAll('.product-image, .product-name').forEach(el => {
-                    el.addEventListener('click', (e) => {
-                        const id = parseInt(el.dataset.id);
-                        const product = products.find(p => p.id === id);
-                        if (product) openModal(product);
-                    });
-                });
+        if (!cart.length) {
+            cartItems.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-44 text-white/35 gap-3">
+                    <i data-lucide="shopping-bag" class="w-10 h-10"></i>
+                    <p class="text-sm">Votre panier est vide</p>
+                </div>`;
+            lucide.createIcons(); return;
+        }
 
-                // Écouteurs ajout panier
-                document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-                    btn.removeEventListener('click', addToCartHandler);
-                    btn.addEventListener('click', addToCartHandler);
-                });
-            }
+        cartItems.innerHTML = cart.map(item => `
+            <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+                <div class="flex-1 min-w-0">
+                    <div class="font-medium text-sm truncate">${item.name}</div>
+                    <div class="text-xs text-white/45 mt-0.5">${item.price.toLocaleString('fr-FR')} FCFA / u.</div>
+                </div>
+                <div class="flex items-center gap-1.5 flex-shrink-0">
+                    <button class="qty-btn" data-qid="${item.id}" data-d="-1">−</button>
+                    <span class="w-5 text-center text-sm font-semibold">${item.quantity}</span>
+                    <button class="qty-btn" data-qid="${item.id}" data-d="1">+</button>
+                </div>
+                <span class="text-sm font-bold flex-shrink-0 w-20 text-right">${(item.price * item.quantity).toLocaleString('fr-FR')}</span>
+            </div>`).join('');
 
-            function openModal(product) {
-                modalContent.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover rounded-xl">
-                    <h3 class="text-2xl font-bold text-slate-800">${product.name}</h3>
-                    <p class="text-ocean text-xl font-semibold">${product.price.toLocaleString()} FCFA</p>
-                    <p class="text-slate-700">${product.description}</p>
-                    <p class="text-sm text-slate-500">${product.details}</p>
-                    <p class="stock-badge inline-block"><i data-lucide="map-pin" class="w-3 h-3"></i> Stock à Cap Skirring</p>
-                    <button data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" data-category="${product.category}" class="add-to-cart-btn-modal mt-4 w-full bg-ocean hover:bg-[#0a3b4f] text-white font-medium py-2 rounded-full">Ajouter au panier</button>
-                `;
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                lucide.createIcons();
+        document.querySelectorAll('[data-qid]').forEach(btn =>
+            btn.addEventListener('click', () => updateQty(+btn.dataset.qid, +btn.dataset.d))
+        );
+    }
 
-                const btnModal = modalContent.querySelector('.add-to-cart-btn-modal');
-                if (btnModal) {
-                    btnModal.addEventListener('click', (e) => {
-                        const id = parseInt(btnModal.dataset.id);
-                        const name = btnModal.dataset.name;
-                        const price = parseInt(btnModal.dataset.price);
-                        const category = btnModal.dataset.category;
-                        addToCart({ id, name, price, category });
-                        modal.classList.add('hidden');
-                    });
-                }
-            }
+    /* ── CHECKOUT ───────────────────────────────────────────────────── */
+    function checkoutWhatsApp() {
+        if (!cart.length) { alert('Votre panier est vide.'); return; }
+        const lines = cart.map(i => `- ${i.name} x${i.quantity} = ${(i.price * i.quantity).toLocaleString('fr-FR')} FCFA`).join('\n');
+        const total = cart.reduce((a, i) => a + i.price * i.quantity, 0);
+        const msg = `Bonjour Ajamat Sport 👋\n\nJe souhaite commander :\n${lines}\n\n*Total : ${total.toLocaleString('fr-FR')} FCFA*\n\nMerci !`;
+        window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
 
-            function addToCartHandler(e) {
-                const btn = e.currentTarget;
-                const id = parseInt(btn.dataset.id);
-                const name = btn.dataset.name;
-                const price = parseInt(btn.dataset.price);
-                const category = btn.dataset.category;
-                addToCart({ id, name, price, category });
-            }
+    /* ── FILTERS ────────────────────────────────────────────────────── */
+    document.querySelectorAll('.filter-pill, .filter-btn-mobile').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const f = btn.dataset.filter;
+            document.querySelectorAll('.filter-pill').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+            renderProducts(f);
+            document.getElementById('mobile-menu').classList.add('-translate-x-full');
+            document.getElementById('produits').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
 
-            function addToCart(product) {
-                const existing = cart.find(item => item.id === product.id);
-                if (existing) {
-                    existing.quantity += 1;
-                } else {
-                    cart.push({ ...product, quantity: 1 });
-                }
-                saveCart();
-                updateCartUI();
-                offcanvas.classList.remove('translate-x-full');
-            }
+    document.querySelectorAll('[data-filter-desktop]').forEach(lnk => {
+        lnk.addEventListener('click', e => {
+            e.preventDefault();
+            const f = lnk.dataset.filterDesktop;
+            document.querySelectorAll('.filter-pill').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
+            renderProducts(f);
+            document.getElementById('produits').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
 
-            function addPackToCart(productsArray) {
-                productsArray.forEach(prod => {
-                    const existing = cart.find(item => item.name === prod.name);
-                    if (existing) {
-                        existing.quantity += 1;
-                    } else {
-                        cart.push({ ...prod, id: Date.now() + Math.random(), quantity: 1 });
-                    }
-                });
-                saveCart();
-                updateCartUI();
-                offcanvas.classList.remove('translate-x-full');
-            }
+    /* ── MOBILE MENU ────────────────────────────────────────────────── */
+    document.getElementById('menu-toggle').addEventListener('click', () => document.getElementById('mobile-menu').classList.remove('-translate-x-full'));
+    document.getElementById('close-mobile-menu').addEventListener('click', () => document.getElementById('mobile-menu').classList.add('-translate-x-full'));
 
-            function updateCartUI() {
-                const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-                cartCountSpan.textContent = totalItems;
+    /* ── CART OPEN/CLOSE ────────────────────────────────────────────── */
+    document.getElementById('cart-toggle').addEventListener('click', () => offcanvas.classList.toggle('translate-x-full'));
+    document.getElementById('close-cart').addEventListener('click', () => offcanvas.classList.add('translate-x-full'));
 
-                if (cart.length === 0) {
-                    cartItemsContainer.innerHTML = '<p class="text-white/70 text-center">Votre panier est vide.</p>';
-                } else {
-                    let itemsHtml = '';
-                    cart.forEach(item => {
-                        itemsHtml += `
-                            <div class="flex justify-between items-center border-b border-white/20 pb-2">
-                                <div>
-                                    <span class="font-medium">${item.name}</span>
-                                    <span class="text-sm block text-white/70">x${item.quantity}</span>
-                                </div>
-                                <span class="font-semibold">${(item.price * item.quantity).toLocaleString()} FCFA</span>
-                            </div>
-                        `;
-                    });
-                    cartItemsContainer.innerHTML = itemsHtml;
-                }
+    /* ── MODAL ──────────────────────────────────────────────────────── */
+    document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
 
-                const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-                cartTotalSpan.textContent = total.toLocaleString() + ' FCFA';
-            }
+    /* ── PACKS ──────────────────────────────────────────────────────── */
+    document.querySelectorAll('[data-add-pack]').forEach(btn =>
+        btn.addEventListener('click', () => addPackToCart(JSON.parse(btn.dataset.addPack)))
+    );
 
-            // WhatsApp checkout
-            function checkoutWhatsApp() {
-                if (cart.length === 0) {
-                    alert('Votre panier est vide.');
-                    return;
-                }
-                let message = "Bonjour, je souhaite commander :\n";
-                cart.forEach(item => {
-                    message += `- ${item.name} x${item.quantity} = ${(item.price * item.quantity).toLocaleString()} FCFA\n`;
-                });
-                const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-                message += `Total : ${total.toLocaleString()} FCFA\n\nMerci !`;
-                const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-                window.open(url, '_blank');
-            }
+    /* ── CHECKOUT ───────────────────────────────────────────────────── */
+    document.getElementById('checkout-whatsapp').addEventListener('click', checkoutWhatsApp);
 
-            // ---------- INITIALISATION ----------
-            renderProducts('all');
-            updateCartUI();
+    /* ── SCROLL REVEAL ──────────────────────────────────────────────── */
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-            // Filtres desktop
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const filter = btn.dataset.filter;
-                    filterButtons.forEach(b => {
-                        b.classList.remove('bg-ocean', 'text-white');
-                        b.classList.add('bg-white', 'border', 'border-gray-300', 'text-slate-700');
-                    });
-                    btn.classList.add('bg-ocean', 'text-white');
-                    btn.classList.remove('bg-white', 'border-gray-300', 'text-slate-700');
-                    renderProducts(filter);
-                });
-            });
-
-            // Filtres mobile
-            filterMobileBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const filter = btn.dataset.filter;
-                    renderProducts(filter);
-                    mobileMenu.classList.add('-translate-x-full');
-                });
-            });
-
-            // Menu mobile
-            menuToggle.addEventListener('click', () => {
-                mobileMenu.classList.remove('-translate-x-full');
-            });
-            closeMobile.addEventListener('click', () => {
-                mobileMenu.classList.add('-translate-x-full');
-            });
-
-            // Panier
-            cartToggle.addEventListener('click', () => {
-                offcanvas.classList.toggle('translate-x-full');
-            });
-            closeCart.addEventListener('click', () => {
-                offcanvas.classList.add('translate-x-full');
-            });
-
-            // Modale
-            closeModal.addEventListener('click', () => {
-                modal.classList.add('hidden');
-            });
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.add('hidden');
-            });
-
-            // Packs
-            document.querySelectorAll('[data-add-pack]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const packData = JSON.parse(btn.dataset.addPack);
-                    addPackToCart(packData);
-                });
-            });
-
-            // WhatsApp checkout
-            whatsappBtn.addEventListener('click', checkoutWhatsApp);
-
-            // Fermer le panier en cliquant dehors (optionnel)
-            offcanvas.addEventListener('click', (e) => {
-                if (e.target === offcanvas) offcanvas.classList.add('translate-x-full');
-            });
-
-            // Re-création des icônes après chaque modif (déjà fait dans render, mais pour les sections statiques)
-            lucide.createIcons();
-        })();
-    </script>
+    /* ── INIT ───────────────────────────────────────────────────────── */
+    renderProducts('all');
+    renderCrossSell();
+    updateCartUI();
+    lucide.createIcons();
+})();
+</script>
 </body>
 </html>
