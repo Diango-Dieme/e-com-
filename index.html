@@ -593,13 +593,13 @@
 (function () {
     const WHATSAPP = '221761534994';
 
-    /* ── CATALOGUE ─────────────────────────────────────────────────── */
+    /* ── CATALOGUE avec images réelles ─────────────────────────────────── */
     const products = [
         {
             id: 1, category: 'surf',
             name: "Leash Koetsu 6'",
             price: 8909,
-            image: "https://via.placeholder.com/400x280/0a3d55/c8a96e?text=Leash+Surf",
+            image: "KOETSU Surfboard Leash.jpg",
             stockUrgent: true,
             description: "Leash ultra-résistant en uréthane, longueur 6 pieds. Idéal pour les vagues de Cap Skirring.",
             details: "Double swivel anti-torsion · Attache velcro renforcée · Idéal eau chaude"
@@ -608,7 +608,7 @@
             id: 2, category: 'surf',
             name: "Wax Surf Premium",
             price: 4289,
-            image: "https://via.placeholder.com/400x280/0a3d55/c8a96e?text=Wax+Surf",
+            image: "Wax Surf.jpg",
             stockUrgent: true,
             description: "Wax tropicale pour eaux chaudes (24°C+). Excellente adhérence, parfum vanille.",
             details: "Formule tropical · Base ou top coat · 3 barrettes incluses"
@@ -617,7 +617,7 @@
             id: 3, category: 'surf',
             name: "Traction Pad Surf",
             price: 6500,
-            image: "https://via.placeholder.com/400x280/0a3d55/c8a96e?text=Traction+Pad",
+            image: "Traction Pad Surf.jpg",
             stockUrgent: false,
             description: "Traction pad 3 pièces pour shortboard et fish. Grip maximal sous les pieds.",
             details: "Mousse EVA haute densité · Kick tail 35mm · Adhésif 3M"
@@ -626,7 +626,7 @@
             id: 4, category: 'natation',
             name: "Lunettes SCVCN",
             price: 3668,
-            image: "https://via.placeholder.com/400x280/1a6b8a/ffffff?text=Lunettes+Swim",
+            image: "Lunettes SCVCN.jpg",
             stockUrgent: false,
             description: "Lunettes de natation anti-buée, verres teintés pour la mer. Confortables et ajustables.",
             details: "Joint silicone · Nez interchangeable · Protection UV"
@@ -635,7 +635,7 @@
             id: 5, category: 'natation',
             name: "Masque Snorkeling 180°",
             price: 9800,
-            image: "https://via.placeholder.com/400x280/1a6b8a/ffffff?text=Masque+Snorkel",
+            image: "Masque Snorkeling 180°.webp",
             stockUrgent: false,
             description: "Masque intégral vision panoramique 180°. Parfait pour les fonds de Casamance.",
             details: "Anti-buée · Valve anti-remontée d'eau · Taille adulte universelle"
@@ -644,7 +644,7 @@
             id: 6, category: 'padel',
             name: "Balles de Padel (x3)",
             price: 5958,
-            image: "https://via.placeholder.com/400x280/0a3d55/ffffff?text=Balles+Padel",
+            image: "Balles de Padel (x3).webp",
             stockUrgent: false,
             description: "Balles de padel pression optimale pour terrains extérieurs. Homologuées FIP.",
             details: "Lot de 3 balles · Résistance chaleur · Homologuées FIP"
@@ -653,7 +653,7 @@
             id: 7, category: 'padel',
             name: "Overgrip Raquette Padel",
             price: 2400,
-            image: "https://via.placeholder.com/400x280/0a3d55/ffffff?text=Overgrip",
+            image: "Overgrip Raquette Padel.avif",
             stockUrgent: false,
             description: "Overgrip absorbant pour raquette de padel. Lot de 3. Améliore la prise en main.",
             details: "Lot de 3 · Absorbant humidité · Compatible toutes raquettes"
@@ -662,7 +662,7 @@
             id: 8, category: 'paddle',
             name: "Pagaie SUP Alu",
             price: 18500,
-            image: "https://via.placeholder.com/400x280/0b4f6c/c8a96e?text=Pagaie+SUP",
+            image: "Pagaie SUP Alu.jpg",
             stockUrgent: false,
             description: "Pagaie de stand-up paddle en aluminium, réglable 165–215cm. Légère et robuste.",
             details: "Alu 6061 · Réglable 165–215cm · Poids 680g · Pale HDPE"
@@ -768,7 +768,6 @@
                 setTimeout(() => { btn.textContent = '+ Ajouter'; btn.style.cssText = ''; }, 1500);
             })
         );
-        // re-observe for scroll reveal
         document.querySelectorAll('#cross-sell-grid .reveal').forEach(el => observer.observe(el));
     }
 
